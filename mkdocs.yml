@@ -1,7 +1,7 @@
 # see https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation
 nav:
   - Welcome!: index.md
-  - Steganography: what-is-stego.md
+  - Steganography: what-is-steg.md
   - Planning: planning-design.md
   - Encoding: encoding.md
   - Decoding: decoding.md
@@ -12,7 +12,7 @@ nav:
 site_name: Space Steganography Tutorial
 
 # base URL where docs will be hosted. by making it a subdir of the real site, we help that out.
-site_url: https://almendra.dev/project/eng240-stego/tutorial
+site_url: https://almendra.dev/project/eng240-steg/tutorial
 
 # set colorscheme options
 theme: 
