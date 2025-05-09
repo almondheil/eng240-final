@@ -1,0 +1,33 @@
+# see https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation
+# TODO: SET IT UP
+nav:
+  - Start: index.md
+  - 
+
+################################################################################
+
+# displayed in the tab bar and as the page title
+site_name: Space Steganography Tutorial
+
+# base URL where docs will be hosted. by making it a subdir of the real site, we help that out.
+site_url: https://almendra.dev/project/eng240-stego/tutorial
+
+# set colorscheme options
+theme: 
+  name: material
+  palette:
+    scheme: slate
+    primary: black
+    accent: indigo
+
+# material markdown extensions
+markdown_extensions:
+  # pretty boxes like "note" "warning" "error"
+  - admonition
+  - pymdownx.superfences
+
+  # emoji
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
