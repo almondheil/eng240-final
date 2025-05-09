@@ -30,13 +30,15 @@ There are three major approaches to text steganography: [^1]
 2. **Linguistic**: Use knowledge about language properties to disguise changes that encode data.
 3. **Statistical**: Generate a text from scratch to hide information, based on real data.
 
-??? info "Existing or new text?"
+??? info "Text creation vs. modification"
 
     Both **Format-based** and **Linguistic** approaches require an existing text to act as the cover text,
     and they encode information into that text by changing it in sneaky ways.
 
     The **Statistical** approach generates a new text based on known language patterns.
     One recognized way of doing so is with a Markov Chain, and there has also been research into using Gen AI for this purpose.
+
+    These are two very different approaches, but they have the same goal of a well-hidden text.
 
 Text steganography is an **interesting challenge** in terms of the three attributes steganography values,
 because human brains are really good at noticing inconsistencies in text.
