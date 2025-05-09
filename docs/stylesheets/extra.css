@@ -1,0 +1,5 @@
+/* change highlight color to green! */
+[data-md-color-scheme="slate"] {
+	--md-code-hl-color: #64DD17;
+	--md-code-hl-color--light: #64DD171A
+}

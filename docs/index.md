@@ -1,3 +1,5 @@
+# Welcome!
+
 Hello! Welcome to the tutorial I made on *space steganography*.
 This project was completed as part of Professor Erik Simpson's
 [Lighting the Page](https://eriksimpson.sites.grinnell.edu/Connections/Digital/Lighting/index.html)

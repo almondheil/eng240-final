@@ -14,27 +14,42 @@ site_name: Space Steganography Tutorial
 # base URL where docs will be hosted. by making it a subdir of the real site, we help that out.
 site_url: https://almendra.dev/project/eng240-steg/tutorial
 
-# set colorscheme options
 theme: 
   name: material
+  features:
+    # allow code copying with easy button.
+    - content.code.copy
+  icon:
+    # make the annotation icon a ?
+    annotation: material/help-circle
   palette:
+    # set colorscheme to a good one
     scheme: slate
     primary: black
     accent: indigo
 
-# material markdown extensions
+# markdown extensions (I use a bunch of them)
 markdown_extensions:
   # pretty boxes like "note" "warning" "error"
   - admonition
   - pymdownx.details
   - pymdownx.superfences
 
-  # emoji
-  - attr_list
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-
   # footnotes for citations
   - footnotes
 
+  # data tables
+  - tables
+
+  # group tabs to allow switching between two subpages
+  - pymdownx.tabbed:
+      alternate_style: true
+
+  # table of contents in each section
+  - toc:
+      permalink: true
+      title: In this section
+
+# load additional CSS code
+extra_css:
+  - stylesheets/extra.css
