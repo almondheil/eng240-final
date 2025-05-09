@@ -1,8 +1,10 @@
 # see https://www.mkdocs.org/user-guide/writing-your-docs/#configure-pages-and-navigation
-# TODO: SET IT UP
 nav:
-  - Start: index.md
-  - 
+  - Short Intro: index.md
+  - Steganography: what-is-stego.md
+  - Planning: planning-out-system.md
+  - Encoding: encoding.md
+  - Decoding: decoding.md
 
 ################################################################################
 
@@ -24,6 +26,7 @@ theme:
 markdown_extensions:
   # pretty boxes like "note" "warning" "error"
   - admonition
+  - pymdownx.details
   - pymdownx.superfences
 
   # emoji
