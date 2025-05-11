@@ -60,7 +60,7 @@ def code_to_spaces(code):
     return space_string
 
 
-def add_spaces(line, spaces)
+def add_spaces(line, spaces):
     """
     Add secret spaces at the end of a line.
 
@@ -92,7 +92,7 @@ def encode_message():
         char = char.lower();
 
         # ignore characters that we can't encode, but warn the user they will be ignored
-        if not char in letter_to_code
+        if not char in letter_to_code:
             print(f'  "{char}" cannot be in message, it will be ignored')
 
         # if the letter does not break rules, add it
