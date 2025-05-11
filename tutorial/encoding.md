@@ -461,3 +461,5 @@ Here's what to respond to each prompt:
 3. Output file: `hidden.txt`
 
 When it's done, you can open `hidden.txt`. It'll look just like before, unless you select the lines and reveal the extra spaces.
+
+You probably can't read the secret message anymore, right? Don't worry, in the next step we'll make a program to [decode the secret](decoding.md)!
