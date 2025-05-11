@@ -8,6 +8,9 @@ nav:
 
 ################################################################################
 
+# set dir for content to `tutorial`
+docs_dir: tutorial
+
 # displayed in the tab bar and as the page title
 site_name: Space Steganography Tutorial
 
