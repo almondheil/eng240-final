@@ -1,144 +1,107 @@
-# take a valid letter, and turn it into a binary code
 letter_to_code = {
-    'a':  '0',
-    'b':  '1',
-    'c':  '10',
-    'd':  '11',
-    'e':  '100',
-    'f':  '101',
-    'g':  '110',
-    'h':  '111',
-    'i':  '1000',
-    'j':  '1001',
-    'k':  '1010',
-    'l':  '1011',
-    'm':  '1100',
-    'n':  '1101',
-    'o':  '1110',
-    'p':  '1111',
-    'q':  '10000',
-    'r':  '10001',
-    's':  '10010',
-    't':  '10011',
-    'u':  '10100',
-    'v':  '10101',
-    'w':  '10110',
-    'x':  '10111',
-    'y':  '11000',
-    'z':  '11001',
-    ' ':  '11010',
-    '.':  '11011',
-    ',':  '11100',
-    '!':  '11101',
-    '?':  '11110',
-    ':':  '11111'
+    'a': '0',      # letters
+    'b': '1',
+    'c': '10',
+    'd': '11',
+    'e': '100',
+    'f': '101',
+    'g': '110',
+    'h': '111',
+    'i': '1000',
+    'j': '1001',
+    'k': '1010',
+    'l': '1011',
+    'm': '1100',
+    'n': '1101',
+    'o': '1110',
+    'p': '1111',
+    'q': '10000',
+    'r': '10001',
+    's': '10010',
+    't': '10011',
+    'u': '10100',
+    'v': '10101',
+    'w': '10110',
+    'x': '10111',
+    'y': '11000',
+    'z': '11001',
+    ',': '11010',  # punctuation
+    '.': '11011',
+    '!': '11100',
+    '?': '11101',
+    '-': '11110',
+    ' ': '11111'   # space
 }
 
+def code_to_whitespace(code):
+    # Use code to generate a string of whitespace
+    whitespace = ''
+    for digit in code:
+        # Insert a ' ' or a '\t' depending on code digit
+        if (digit == 0):
+            whitespace += ' '
+        else:
+            whitespace += '\t'
 
-def code_to_spaces(code):
-    """
-    Turn the readable code for a letter (e.g. 11100) into spaces and tabs for encoding.
+    # Return the calculated string
+    return whitespace
 
-    Input:
-        code: The readable binary code for a letter.
-    Output:
-        A string that has a sequence of spaces and tabs, according to that code.
-    """
+def add_whitespace_at_end(line, whitespace):
+    # get the start of the line, but remove extra space characters from the end
+    line_content = line.rstrip('\r\n \t')
 
-    # start off with an empty string
-    space_string = ''
-    
-    # build up pieces of the space_string by adding on letter-by-letter.
-    for letter in code:
-        # for t, add a tab character to the string. for s, add a space character.
-        if letter == '0':
-            space_string += '\t'
-        if letter == '1':
-            space_string += ' '
-
-    # return the finished string when we are done
-    return space_string
-
-
-def add_spaces(line, spaces):
-    """
-    Add secret spaces at the end of a line.
-
-    Input:
-        lines: Array of file lines
-        index: Index to change
-        spaces: Sequence of spaces to add
-    Output:
-        Nothing. It modifies the lines array.
-    """
-    # get the line, but take off the \r and/or \n characters that make a newline
-    line_content = line.rstrip('\r\n')
-
-    # add our secret spaces, and then re-add the newline character at the end
-    return line_content + spaces + '\n'
+    # add our whitespace at the end, along with a new newline
+    return line_content + whitespace + '\n'
 
 def encode_message():
-    """
-    Encode a message.
-    """
+    # Ask the user what their secret message will be
+    secret_message = input('Secret message? ')
 
-    # Prompt the user for their secret message
-    message_input = input('Secret message to encode? ')
+    # Make the secret message lowercase
+    secret_message = secret_message.lower()
+    # If we find a letter that's not in our mapping, quit the program
+    for letter in secret_message:
+        if not letter in letter_to_code:
+            print('Letter' + letter + 'not allowed in message.')
+            exit(1)
 
-    # Take the message the user gave as input, and modify it to match our encoding dictionary.
-    secret_message = ''
-    for char in message_input.lower():
-        # convert all characters to their lowercase versions
-        char = char.lower();
+    # Ask the user what file to use as a cover text
+    cover_text = input('Cover text file? ')
+    with open(cover_text, 'r') as input_file:
+        lines = input_file.readlines()
 
-        # ignore characters that we can't encode, but warn the user they will be ignored
-        if not char in letter_to_code:
-            print(f'  "{char}" cannot be in message, it will be ignored')
-
-        # if the letter does not break rules, add it
-        else:
-            secret_message += char
-
-    # Next, prompt the user to enter their cover file to use
-    cover_file_name = input('Cover file to hide the secret message? ')
-
-    # Read the file contents
-    with open(cover_file_name, 'r') as file:
-        lines = file.readlines()
-        
-    # Make sure the number of lines in the file is enough to store the secret message.
-    # If the file is too short, print an error message.
-    # We use message_length + 1 because one line is dedicated to the header
-    n_lines = len(lines)
-    message_length = len(secret_message)
-    if (n_lines < message_length + 1):
-        print(f'That file is only {n_lines} long, it must be at least {message_length} to store that message.');
+    # Make sure the cover text is long enough to store the secret message
+    # (one line per character, plus a header)
+    num_lines = len(lines)
+    if (num_lines < len(secret_message) + 1):
+        print('Cover file is too short to store message')
         exit(1)
 
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
+    secret_message_length = len(secret_message)
+    length_code = f'{secret_message_length:b}'
+    length_whitespace = code_to_whitespace(length_code)
 
-    # Conver the length of the message to a binary number
-    header_code = f'{message_length:b}'
+    # Place the encoded length at the end of the first file line
+    lines[0] = add_whitespace_at_end(lines[0], length_whitespace)
 
-    # Turn that binary number into a sequence of spaces, so we can put it at the end of the first line
-    header_spaces = code_to_spaces(header_code)
-    lines[0] = add_spaces(lines[0], header_spaces)
+    # For every letter in the secret message, do these steps.
+    for (pos, letter) in enumerate(secret_message):
+        # Use the translation table to convert it to a binary code (0s and 1s)
+        code = letter_to_code[letter]
 
-    # For each message character, add the code of that character to the end of its line.
-    for index, secret_char in enumerate(secret_message):
-        # turn the secret char into spaces
-        secret_char_code = letter_to_code[secret_char]
-        secret_char_spaces = code_to_spaces(secret_char_code)
+        # Turn that binary code into whitespace
+        whitespace = code_to_whitespace(code)
 
-        # put that at the end of the corresponding line
-        lines[index + 1] = add_spaces(lines[index + 1], secret_char_spaces)
+        # Place the generated whitespace at the end of the line
+        # (add 1 to pos, since position 0 in lines is taken by header)
+        lines[pos + 1] = add_whitespace_at_end(lines[pos + 1], whitespace)
 
-    # Ask the user what file they want to output to
-    print('Successfully encoded message!')
-    output_file_name = input('File to save output? ')
-    
-    # Output to that file
-    with open(output_file_name, 'w') as file:
-        file.writelines(lines)
+    # Ask the user what file to save the result to
+    output_file = input('Output text file? ')
+    with open(output_file, 'w') as output_file:
+        output_file.writelines(lines)
 
-# encode a message when the program runs
+# run the program when the file is run
 encode_message()
