@@ -27,7 +27,7 @@ Start off by creating a new Python file called `encode.py`.
 
         You can start at <https://www.python.org/downloads/>.
 
-## Scaffolding the program
+## Scaffolding
 
 We'll start off by planning out the steps our progam must take, from the lowest level upwards.
 
@@ -41,7 +41,8 @@ def encode_message():
 
     # Ask the user what file to use as a cover text
 
-    # Encode the length of the secret message as a binary code, then convert it to whitespace
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
 
     # Place the encoded length at the end of the first file line
 
@@ -67,7 +68,7 @@ Now, let's go through and start filling in things below those comments. I'll mak
 
 First, we can use the `input()` function to ask for user input where it is relevant.
 
-``` py title="encode.py - user input" hl_lines="3 6 21"
+``` py title="encode.py - User input" hl_lines="3 6 21"
 def encode_message():
     # Ask the user what their secret message will be
     secret_message = input('Secret message? ')
@@ -75,7 +76,8 @@ def encode_message():
     # Ask the user what file to use as a cover text
     cover_text = input('Cover text file? ')
 
-    # Encode the length of the secret message as a binary code, then convert it to whitespace
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
 
     # Place the encoded length at the end of the first file line
 
@@ -96,17 +98,18 @@ encode_message()
 
 Next, we can add logic to open the files the user specifies and handle errors.
 
-``` py title="encode.py - file opening" hl_lines="7-8 24-25"
+``` py title="encode.py - File opening" hl_lines="7-8 24-25"
 def encode_message():
     # Ask the user what their secret message will be
     secret_message = input('Secret message? ')
 
     # Ask the user what file to use as a cover text
     cover_text = input('Cover text file? ')
-    with open(cover_text, 'r') as input:
-        lines = input.readlines()
+    with open(cover_text, 'r') as input_file:
+        lines = input_file.readlines()
 
-    # Encode the length of the secret message as a binary code, then convert it to whitespace
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
 
     # Place the encoded length at the end of the first file line
 
@@ -120,8 +123,8 @@ def encode_message():
 
     # Ask the user what file to save the result to
     output_file = input('Output text file? ')
-    with open(output_file, 'w') as output:
-        output.writelines(lines)
+    with open(output_file, 'w') as output_file:
+        output_file.writelines(lines)
 
 # run the program when the file is run
 encode_message()
@@ -133,91 +136,31 @@ encode_message()
     but I don't want to add the extra complexity. We never handled these errors in
     our code from class, either.
 
-## Message length header
 
-First, let's work on writing the message length as a header to the file.
+## Mapping characters
+### Allowed characters
 
-To do that, first we need to turn the message length into a binary code that represents it.
+There are existing systems that map characters onto binary codes, but they aren't quite
+right for us because they can handle a lot of characters but also take up more space.
 
-I don't think this is a central thing to understand, so we'll use a Python built-in way to format the string.
-
-```py title="encode.py - calculate message length"
-def encode_message():
-    # (code above hidden)
-
-    # Encode the length of the secret message as a binary code, then convert it to whitespace
-    secret_message_length = len(secret_message)
-    length_code = f'{secret_message_length:b}' # use string formatting to format as binary
-    length_whitespace = code_to_whitespace(length_code)
-
-    # Place the encoded length at the end of the first file line
-
-    # For every letter in the secret message, do these steps.
-    for TODO_FILL_IN_LOOP:
-        # Use the translation table to convert it to a binary code (0s and 1s)
-
-        # Turn that binary code into whitespace
-
-        # Place the generated whitespace at the end of the line
-
-    # Ask the user what file to save the result to
-    output_file = input('Output text file? ')
-    with open(output_file, 'w') as output:
-        output.writelines(lines)
-
-# run the program when the file is run
-encode_message()
-```
-
-!!! failure
-
-    TODO: THIS IS WHERE WE ARE GONNA DO BINARY, JUST USE PYTHON BUILTIN??? RIGHT??? OR DOES HE EXPECT DIFFERENT???
-
-    TODO: AND YOU WILL ALSO DEVELOP THE "ADD TO END OF LINE HERE" AND IT WILL DEAL WITH SPACES AND TABS AND NEWLINES AND \r-S
-
-## Making characters into whitespace
-
-First, let's work on the process of turning characters into whitespace.
-
-### Characters to binary codes
-
-To do that, we need to establish a **mapping** from characters to binary codes.
+We want to use the fewest characters possible,
+because that will let us keep our steganography slightly more hidden.
 
 !!! question
 
-    What set of characters should we choose to make our mapping?
+    What characters should we allow in the secret message?
 
-We want to keep the number of characters in our mapping low, because having more will make the binary codes longer and easier to detect.
+For this tutorial, the minimal characters we want to support is the 26 lowercase letters.
 
-Because of that, we'll stick to the lowercase letters of the alphabet.
+!!! tip 
 
-There are 26 of those, but because we're using binary code we can fit 32 (2^5) characters in that amount of space.
-Here's what we'll go with for this tutorial:
+    But we can store more than just that without wasting space!
 
-- Lowercase letters, `a`-`z`.
-- Punctuation: `,` `.` `!` `?` `-` 
-- Spaces
+    The binary code for 25 (the 26th number, counting from 0) is `11001`, which doesn't fill all the possible positions with `1`s.
 
-!!! question
+    We can actually fit up to 32 total options into five positions.
 
-    How can we represent our mapping in Python?
-
-We can code this by creating a dictionary, which is a Python data structure that maps keys to values. Here's a small example.
-
-```py title="Example Dictionary"
-example = {
-    'key1': 'value1',
-    'key2': 'value2',
-    'key3': 'value3'
-}
-
-a = example['key2']
-# -> 'value2'
-```
-
-If we do the same with our 32 characters, we can count up in binary to make their codes.
-
-When we finish, it looks like this:
+We can add a **dictionary** to our code to store the mapping of our 32 characters.
 
 ```py title="encode.py - letter_to_code dictionary"
 letter_to_code = {
@@ -258,23 +201,24 @@ letter_to_code = {
 # (the rest of your code below)
 ```
 
-!!! info 
+??? question "What's a dictionary?"
 
-    You can tell we have used all the possible combinations of our five positions because the last digit was `11111`.
+    In Python, a dictionary is an abstraction that lets us map keys (characters) to values (binary codes).
 
-    If we tried to add one more, it would round up to `100000` and require a whole new digit.
+    This dictionary lets us look up an allowed letter and gives us the code in 0s and 1s.
 
-### Binary codes to whitespace
+    ```py title="Example"
+    letter_to_code('w')
+    # -> '10110'
+    ```
+### Binary to whitespace
 
-Now we have binary codes made of `0`s and `1`s, but we need to turn those into whitespace -- spaces and tabs.
-
-??? question "Why don't we just store spaces and tabs in our mapping?"
-
-    We could, but I find it a lot harder to read and it feels less like it connects to binary codes when they're a central concept.
+Now we have an easy way to get the binary codes for our letters, but we
+need to turn them into spaces and tabs before we can hide them in the cover file.
 
 We can make a function to do this:
 
-```py title="encoding.py - code to whitespace function"
+```py title="encode.py - Code to whitespace function"
 letter_to_code = {
     # (hidden)
 }
@@ -295,19 +239,198 @@ def code_to_whitespace(code):
 # (the rest of your code below)
 ```
 
-## Invididual character encoding
+!!! example
 
-!!! failure
+    Now, we can call this function on a code to convert it!
 
-    TODO: I SHOULD MAKE IT SO THAT, IF THERE IS SPACE AT THE END OF THE LINE, WE DELETE THAT. RSTRIP MORE TEXT.
+    ```py
+    code = letter_to_code(f)          # '101'
+    space = code_to_whitespace(code)  # '\t \t'
+    ```
 
-    TODO: HAVE THEM FILL IN THE LOOP
+    Notice how the `1`s become `\t`, and the `0` becomes a space.
 
-## Dealing with input problems
+### Check secret text
 
-!!! failure
+Finally, now that we have a limited set of allowed characters we should
+check that the user's secret code doesn't have any characters we don't allow.
 
-    TODO: THIS IS WHERE I WILL ASK THEM TO CHECK THE FILE LENGTH AND CHECK THE MESSAGE HAS VALID CHARACTERS.
+We can do this with a simple check.
+
+```py title="encode.py - Checking secret text" hl_lines="5-11"
+def encode_message():
+    # Ask the user what their secret message will be
+    secret_message = input('Secret message? ')
+    
+    # Make the secret message lowercase
+    secret_message = secret_message.lower()
+    # If we find a letter that's not in our mapping, quit the program
+    for letter in secret_message:
+        if not letter in letter_to_code:
+            print('Letter' + letter + 'not allowed in message.')
+            exit(1)
+
+    # (rest of code hidden)
+```
+
+## Length header
+
+Now, we can start calculating how to hide the code in the file.
+
+For our first step, we will calculate the length of the message and store it
+on the first line of the file.
+
+### Encode length
+
+To store the length of the message, we must convert it into a binary code that stores its value.
+Then, we can turn that code into whitespace.
+
+!!! warning
+
+    This is different from how we use binary codes in the `letter_to_code` dictionary.
+
+    Its goal is to turn specific letters into unique codes, but we want to turn a number into
+    the code that represents it (like how the binary code `1010` represents the number 10).
+
+We could write a function to turn a number into the binary code that represents it, but I don't
+think that is as important to understanding this process.
+Instead, we'll use a feature of Python to do the conversion.
+
+```py title="encode.py - Encode length header" hl_lines="9-13"
+def encode_message():
+    # (code before hidden)
+
+    # Ask the user what file to use as a cover text
+    cover_text = input('Cover text file? ')
+    with open(cover_text, 'r') as input_file:
+        lines = input_file.readlines()
+
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
+    secret_message_length = len(secret_message)
+    length_code = f'{secret_message_length:b}'
+    length_whitespace = code_to_whitespace(length_code)
+
+    # Place the encoded length at the end of the first file line
+    
+    # (code after hidden)
+```
+
+### Store in file
+
+We'll need to store whitespace at the end of the line to hide the header.
+
+This is an operation we will do a lot, so it's worth making a function at the top of the file.
+
+```py title="encode.py - Add whitespace at end function" hl_lines="8-13"
+letter_to_code = {
+    # (hidden)
+}
+
+def code_to_whitespace(code):
+    # (hidden)
+
+def add_whitespace_at_end(line, whitespace):
+    # get the start of the line, but remove extra space characters from the end
+    line_content = line.rstrip('\r\n \t')
+
+    # add our whitespace at the end, along with a new newline
+    return line_content + whitespace + '\n'
+```
+
+With that function defined, we can use it to store the header.
+
+```py title="encode.py - Store length header" hl_lines="16"
+def encode_message():
+    # (code before hidden)
+
+    # Ask the user what file to use as a cover text
+    cover_text = input('Cover text file? ')
+    with open(cover_text, 'r') as input_file:
+        lines = input_file.readlines()
+
+    # Encode the length of the secret message as a binary code,
+    # then convert it to whitespace
+    secret_message_length = len(secret_message)
+    length_code = f'{secret_message_length:b}'
+    length_whitespace = code_to_whitespace(length_code)
+
+    # Place the encoded length at the end of the first file line
+    lines[0] = add_whitespace_at_end(lines[0], length_whitespace)
+    
+    # (code after hidden)
+```
+
+!!! note
+
+    We modify the `lines` array that we read from the cover file.
+
+    When we write to the output file at the end of the function, our
+    changes will be included with that.
+
+## Storing secret message
+
+Now, we need to take the secret message and store it in the file.
+Each letter will get one line, but we will start at `lines[1]` because `lines[0]` is already used by the header.
+
+Yay, we can finally replace in the part marked `TODO_FILL_IN_LOOP`!
+
+```py title="encode.py - Store secret message" hl_lines="8 10 13 16-17"
+def encode_message():
+    # (code above hidden)
+
+    # Place the encoded length at the end of the first file line
+    lines[0] = add_whitespace_at_end(lines[0], length_whitespace)
+
+    # For every letter in the secret message, do these steps.
+    for (pos, letter) in enumerate(secret_message):
+        # Use the translation table to convert it to a binary code (0s and 1s)
+        code = letter_to_code[letter]
+
+        # Turn that binary code into whitespace
+        whitespace = code_to_whitespace(code)
+
+        # Place the generated whitespace at the end of the line
+        # (add 1 to pos, since position 0 in lines is taken by header)
+        lines[pos + 1] = add_whitespace_at_end(lines[pos + 1], whitespace)
+
+    # (code below hidden)
+```
+
+??? question "What is that "enumerate" thing?"
+
+    `enumerate` lets us get not only the items of a string, but also their positions.
+
+    We need to know the position so we can find the corresponding position in the lines list.
+    
+### Avoiding an error
+
+!!! failure "Error" 
+
+    But wait! There's an important thing we forgot to check!
+
+    We used the line as position `pos + 1`, but if the secret message is longer than the number of lines in the cover file this code will crash.
+
+To avoid that error, we can check the length before we try to store the message.
+
+```py title="encode.py - Check cover file length" hl_lines="9-14"
+def encode_message():
+    # (code before hidden)
+
+    # Ask the user what file to use as a cover text
+    cover_text = input('Cover text file? ')
+    with open(cover_text, 'r') as input_file:
+        lines = input_file.readlines()
+
+    # Make sure the cover text is long enough to store the secret message
+    # (one line per character, plus a header)
+    num_lines = len(lines)
+    if (num_lines < len(secret_message) + 1):
+        print('Cover file is too short to store message')
+        exit(1)
+
+    # (code after hidden)
+```
 
 ## Running the code
 
@@ -319,15 +442,15 @@ To do that, we'll need a cover text. You can choose any text file, but I'll also
 
     === "Cover file"
 
-        This is an excerpt from [Lighthouses: Their history and romance](https://www.gutenberg.org/ebooks/76041) by William John Hardy on Project Gutenberg.
-
         [Download `lighthouses.txt`](static/lighthouses.txt){:download="lighthouses.txt"}
+
+        This is an excerpt from [*Lighthouses: Their history and romance*](https://www.gutenberg.org/ebooks/76041) by William John Hardy on Project Gutenberg.
 
     === "Code file"
 
-        I hope you were following along, but I'll provide my finished code for this part if you need it.
-
         [Download `encode.py`](static/encode.py){:download="encode.py"}
+
+        I hope you were following along, but I'll provide my finished code for this part if you need it.
 
 Save the file to the same directory as your code, and then run it with `python encode.py`.
 
