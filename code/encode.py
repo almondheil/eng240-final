@@ -102,16 +102,9 @@ def encode_message():
     # Next, prompt the user to enter their cover file to use
     cover_file_name = input('Cover file to hide the secret message? ')
 
-    # Attempt to read the file, and print an error if we couldn't.
-    try:
-        with open(cover_file_name, 'r') as file:
-            lines = file.readlines()
-    except FileNotFoundError:
-        print('Could not find file to open.')
-        exit(1)
-    except PermissionError:
-        print('Cannot open file due to permissions.')
-        exit(1)
+    # Read the file contents
+    with open(cover_file_name, 'r') as file:
+        lines = file.readlines()
         
     # Make sure the number of lines in the file is enough to store the secret message.
     # If the file is too short, print an error message.
@@ -143,14 +136,9 @@ def encode_message():
     print('Successfully encoded message!')
     output_file_name = input('File to save output? ')
     
-    # Attempt to output to that file
-    try:
-        with open(output_file_name, 'w') as file:
-            file.writelines(lines)
-    except PermissionError:
-        print('Cannot open file due to permissions.')
-        exit(1)
-
+    # Output to that file
+    with open(output_file_name, 'w') as file:
+        file.writelines(lines)
 
 # encode a message when the program runs
 encode_message()

@@ -89,16 +89,9 @@ def extract_spaces(line):
 def decode_message():
     input_file_name = input('File to try and decode? ')
 
-    # Attempt to open the file to read its lines
-    try:
-        with open(input_file_name, 'r') as file:
-            lines = file.readlines()
-    except FileNotFoundError:
-        print('Could not find file to open.')
-        exit(1)
-    except PermissionError:
-        print('Cannot open file due to permissions.')
-        exit(1)
+    # Read the file lines
+    with open(input_file_name, 'r') as file:
+        lines = file.readlines()
 
     # Check for the header showing the length on the first line
     header_spaces = extract_spaces(lines[0])
