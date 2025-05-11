@@ -10,7 +10,7 @@ final project for Professor Simpson's ENG-240 class, fall 2025.
 
 - `LICENSE` is the MIT license over this software and this tutorial
 
-- `requirements.txt` contains the dependencies for building the docs with python
+- `requirements.txt` contains the dependencies for building the tutorial with python
 
 # running the code
 
