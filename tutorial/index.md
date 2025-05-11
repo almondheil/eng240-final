@@ -28,4 +28,4 @@ Here are some questions I anticipate you might have as a reader (click to expand
 
 TODO: WHEN NOT SLEEP DEPRIVED: ARE MORE QUESTIONS NECESSARY?
 
-Once you're ready, [let's get started!](what-is-steg.md)
+Once you're ready, [let's get started](what-is-steg.md)!

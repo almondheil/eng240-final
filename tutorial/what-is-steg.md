@@ -60,7 +60,7 @@ In this tutorial, we're going to explore a very simple format-based steganograph
 
     However, it's **simple enough to understand** and that's worth more to me. We're here to learn!
 
-In the next step, we'll [plan and understand the design.](planning-design.md)
+In the next step, we'll [plan and understand the design](planning-design.md).
 
 [^1]: Majeed et al. (2021). A Review on Text Steganography Techniques. In *Mathematics*, <https://www.mdpi.com/2227-7390/9/21/2829>.
 [^2]: Majeed et al. (2021).

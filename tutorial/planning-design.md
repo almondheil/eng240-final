@@ -107,4 +107,4 @@ what direction I am choosing to go in.
 
 1.  For instance, the base-10 number 12 turns into the binary code 1100.
 
-Now that we've established the general flow, let's [write some code for encoding!](encoding.md)
+Now that we've established the general flow, let's [write some code for encoding](encoding.md)!

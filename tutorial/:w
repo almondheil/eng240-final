@@ -75,6 +75,8 @@ def encode_message():
     # Ask the user what file to use as a cover text
     cover_text = input('Cover text file? ')
 
+    # Make sure the file is long enough for the message
+
     # Encode the length of the secret message as a binary code, then convert it to whitespace
 
     # Place the encoded length at the end of the first file line
@@ -106,6 +108,8 @@ def encode_message():
     with open(cover_text, 'r') as input:
         lines = input.readlines()
 
+    # Make sure the file is long enough for the message
+
     # Encode the length of the secret message as a binary code, then convert it to whitespace
 
     # Place the encoded length at the end of the first file line
@@ -132,48 +136,6 @@ encode_message()
     We should technically handle errors if the file fails to open for any reason,
     but I don't want to add the extra complexity. We never handled these errors in
     our code from class, either.
-
-## Message length header
-
-First, let's work on writing the message length as a header to the file.
-
-To do that, first we need to turn the message length into a binary code that represents it.
-
-I don't think this is a central thing to understand, so we'll use a Python built-in way to format the string.
-
-```py title="encode.py - calculate message length"
-def encode_message():
-    # (code above hidden)
-
-    # Encode the length of the secret message as a binary code, then convert it to whitespace
-    secret_message_length = len(secret_message)
-    length_code = f'{secret_message_length:b}' # use string formatting to format as binary
-    length_whitespace = code_to_whitespace(length_code)
-
-    # Place the encoded length at the end of the first file line
-
-    # For every letter in the secret message, do these steps.
-    for TODO_FILL_IN_LOOP:
-        # Use the translation table to convert it to a binary code (0s and 1s)
-
-        # Turn that binary code into whitespace
-
-        # Place the generated whitespace at the end of the line
-
-    # Ask the user what file to save the result to
-    output_file = input('Output text file? ')
-    with open(output_file, 'w') as output:
-        output.writelines(lines)
-
-# run the program when the file is run
-encode_message()
-```
-
-!!! failure
-
-    TODO: THIS IS WHERE WE ARE GONNA DO BINARY, JUST USE PYTHON BUILTIN??? RIGHT??? OR DOES HE EXPECT DIFFERENT???
-
-    TODO: AND YOU WILL ALSO DEVELOP THE "ADD TO END OF LINE HERE" AND IT WILL DEAL WITH SPACES AND TABS AND NEWLINES AND \r-S
 
 ## Making characters into whitespace
 
@@ -202,7 +164,7 @@ Here's what we'll go with for this tutorial:
 
     How can we represent our mapping in Python?
 
-We can code this by creating a dictionary, which is a Python data structure that maps keys to values. Here's a small example.
+We can code our this by creating a dictionary, which is a Python data structure that maps keys to values. Here's a small example.
 
 ```py title="Example Dictionary"
 example = {
@@ -221,7 +183,7 @@ When we finish, it looks like this:
 
 ```py title="encode.py - letter_to_code dictionary"
 letter_to_code = {
-    'a': '0',      # letters
+    'a': '0',      // letters
     'b': '1',
     'c': '10',
     'd': '11',
@@ -247,53 +209,30 @@ letter_to_code = {
     'x': '10111',
     'y': '11000',
     'z': '11001',
-    ',': '11010',  # punctuation
+    ',': '11100',  // punctuation
     '.': '11011',
-    '!': '11100',
-    '?': '11101',
-    '-': '11110',
-    ' ': '11111'   # space
+    '!': '11101',
+    '?': '11110',
+    '-': '11111',
+    ' ': '11010'   // space
 }
 
-# (the rest of your code below)
+// (the rest of your file below)
 ```
-
-!!! info 
-
-    You can tell we have used all the possible combinations of our five positions because the last digit was `11111`.
-
-    If we tried to add one more, it would round up to `100000` and require a whole new digit.
 
 ### Binary codes to whitespace
 
-Now we have binary codes made of `0`s and `1`s, but we need to turn those into whitespace -- spaces and tabs.
+## Message length header
 
-??? question "Why don't we just store spaces and tabs in our mapping?"
+First, let's work on writing the message length as a header to the file.
 
-    We could, but I find it a lot harder to read and it feels less like it connects to binary codes when they're a central concept.
+To do that, first we need to turn the message length into a binary 
 
-We can make a function to do this:
+!!! failure
 
-```py title="encoding.py - code to whitespace function"
-letter_to_code = {
-    # (hidden)
-}
+    TODO: THIS IS WHERE WE ARE GONNA DO BINARY, JUST USE PYTHON BUILTIN??? RIGHT??? OR DOES HE EXPECT DIFFERENT???
 
-def code_to_whitespace(code):
-    # Use code to generate a string of whitespace
-    whitespace = ''
-    for digit in code:
-        # Insert a ' ' or a '\t' depending on code digit
-        if (digit == 0):
-            whitespace += ' '
-        else:
-            whitespace += '\t'
-
-    # Return the calculated string
-    return whitespace
-
-# (the rest of your code below)
-```
+    TODO: AND YOU WILL ALSO DEVELOP THE "ADD TO END OF LINE HERE" AND IT WILL DEAL WITH SPACES AND TABS AND NEWLINES AND \r-S
 
 ## Invididual character encoding
 
