@@ -130,6 +130,9 @@ def whitespace_to_code(whitespace):
         else:
             code += '1'
 
+    # Return the finished code
+    return code
+
 # (the rest of your code below)
 ```
 
@@ -312,14 +315,15 @@ Okay, we're all set! Now we can decode the stego file we created in the previous
 
     Like before, here's my finished code if you want it for any reason.
 
-Save the file to the same directory as your code, and then run it with `python encode.py`.
+Save the file to the same directory as your code, and then run it with `python decode.py`.
 
-Here's what to respond to each prompt:
+When it asks you for a file, enter `hidden.txt` or whatever name you chose for the stego file before. It should spit out the secret message!
 
-1. Secret message: A short message of your choice, using the allowed characters
-2. Cover text: `lighthouses.txt`, or the name of the text file you choose.
-3. Output file: `hidden.txt`
+!!! info
 
-When it's done, you can open `hidden.txt`. It'll look just like before, unless you select the lines and reveal the extra spaces.
+    Feel free to play around with the code more. If you want, you could make it a little bug bounty! There are some
+    known errors I left in for simplicity, and I bet you can find them!
 
-You probably can't read the secret message anymore, right? Don't worry, in the next step we'll make a program to [decode the secret](decoding.md)!
+Feel free to play around with the code more. If you want a little bug bounty, there are some edge cases I didn't handle for simplicity! Can you find them!
+
+If you're ready to go on, check out the little conclusion I wrote: [Step back.](step-back.md)
