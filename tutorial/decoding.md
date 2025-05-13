@@ -83,9 +83,11 @@ The expression is: `([ \t]+)$`.
 
 Now that we have the regular expression, we can write a function that uses it to extract the whitespace.
 
-Put this function at the top of your file.
+Put this function, as well as the import statement, at the top of your file.
 
 ```py title="decode.py - Extracting whitespace"
+import re
+
 def extract_whitespace(line):
     # Get the main content of the line with no ending newline
     line_content = line.rstrip('\r\n')
@@ -109,13 +111,15 @@ back into a binary code of 1s and 0s.
 
 The function that does this looks very similar to the one we wrote before.
 
-!!! note
+!!! tip
 
-    We are adding 0 and 1 to our code, but not the literal numbers. Just like before, this is combining strings together.
+    Generally, we keep the `import` statements at the very top of the file before any functions or other definitions.
 
-    `'1' + '1'` is `11`, not `2`.
+    I won't draw attention to it again and it won't break anything if you mess it up, it's just good style.
 
 ```py title="decode.py - Whitespace to code"
+import re
+
 def whitespace_to_code(whitespace):
     # Use whitespace to generate a string of code
     code = ''
@@ -129,11 +133,19 @@ def whitespace_to_code(whitespace):
 # (the rest of your code below)
 ```
 
+!!! note
+
+    We are adding 0 and 1 to our code, but not the literal numbers. Just like before, this is combining strings together.
+
+    `'1' + '1'` is `11`, not `2`.
+
 ## Code to letter
 
 The final step is to make a reverse mapping from binary codes to letters. This will mirror the dictionary we made before, like the other steps.
 
 ```py title="decode.py - Code to letter"
+import re
+
 code_to_letter = {
     '0'     : 'a',  # letters
     '1'     : 'b', 
@@ -179,7 +191,7 @@ We've set up all the machinery we'll need, so now we can start filling out the b
 First, let's get the binary code of the header.
 
 ```py title="decode.py - Getting the header's code" hl_lines="11-12"
-# (functions and dictionary hidden)
+# (everything above hidden)
 
 def decode_message():
     # Ask the user what file to decode
@@ -254,7 +266,7 @@ Knowing the value of the header also tells us how many lines have a secret lette
 Like in our `whitespace_to_code` function, we'll need a string that we add onto the end of to keep track of the decoded message as we go. Then, we can just call the functions that we've already defined to decode everything!
 
 ```py title="decode.py - Decoding secret letters" hl_lines="18 21 24 27-28 31"
-# (functions and dictionary hidden)
+# (everything above hidden)
 
 def decode_message():
     # Ask the user what file to decode
