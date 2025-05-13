@@ -26,6 +26,4 @@ Here are some questions I anticipate you might have as a reader (click to expand
     but I'll take time to explain the things we didn't cover as much in class.
     That may take the form of more expandable boxes like this one.
 
-TODO: WHEN NOT SLEEP DEPRIVED: ARE MORE QUESTIONS NECESSARY?
-
 Once you're ready, [let's get started](what-is-steg.md)!
