@@ -18,7 +18,7 @@ I'll skip the intermediate steps this time, and just give the outline with user 
 def decode_message():
     # Ask the user what file to decode
     stego_text = input('Stego text to decode? ')
-    with open(cover_text, 'r') as input_file:
+    with open(stego_text, 'r') as input_file:
         lines = input_file.readlines()
 
     # Read the header from the top of the file
@@ -196,7 +196,7 @@ First, let's get the binary code of the header.
 def decode_message():
     # Ask the user what file to decode
     stego_text = input('Stego text to decode? ')
-    with open(cover_text, 'r') as input_file:
+    with open(stego_text, 'r') as input_file:
         lines = input_file.readlines()
 
     # Read the header from the top of the file
@@ -265,13 +265,13 @@ Knowing the value of the header also tells us how many lines have a secret lette
 
 Like in our `whitespace_to_code` function, we'll need a string that we add onto the end of to keep track of the decoded message as we go. Then, we can just call the functions that we've already defined to decode everything!
 
-```py title="decode.py - Decoding secret letters" hl_lines="18 21 24 27-28 31"
+```py title="decode.py - Decoding secret letters" hl_lines="18-19 21 24 27-28 31"
 # (everything above hidden)
 
 def decode_message():
     # Ask the user what file to decode
     stego_text = input('Stego text to decode? ')
-    with open(cover_text, 'r') as input_file:
+    with open(stego_text, 'r') as input_file:
         lines = input_file.readlines()
 
     # Read the header from the top of the file
@@ -301,3 +301,25 @@ def decode_message():
 # run the program when the file is run
 decode_message()
 ```
+
+## Running the code
+
+Okay, we're all set! Now we can decode the stego file we created in the previous chapter.
+
+!!! note "Code download"
+
+    [Download `decode.py`](static/decode.py){:download="decode.py"}
+
+    Like before, here's my finished code if you want it for any reason.
+
+Save the file to the same directory as your code, and then run it with `python encode.py`.
+
+Here's what to respond to each prompt:
+
+1. Secret message: A short message of your choice, using the allowed characters
+2. Cover text: `lighthouses.txt`, or the name of the text file you choose.
+3. Output file: `hidden.txt`
+
+When it's done, you can open `hidden.txt`. It'll look just like before, unless you select the lines and reveal the extra spaces.
+
+You probably can't read the secret message anymore, right? Don't worry, in the next step we'll make a program to [decode the secret](decoding.md)!
