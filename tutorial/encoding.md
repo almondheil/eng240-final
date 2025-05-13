@@ -228,7 +228,7 @@ def code_to_whitespace(code):
     whitespace = ''
     for digit in code:
         # Insert a ' ' or a '\t' depending on code digit
-        if (digit == 0):
+        if (digit == '0'):
             whitespace += ' '
         else:
             whitespace += '\t'
