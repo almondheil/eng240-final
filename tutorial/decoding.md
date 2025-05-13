@@ -324,6 +324,4 @@ When it asks you for a file, enter `hidden.txt` or whatever name you chose for t
     Feel free to play around with the code more. If you want, you could make it a little bug bounty! There are some
     known errors I left in for simplicity, and I bet you can find them!
 
-Feel free to play around with the code more. If you want a little bug bounty, there are some edge cases I didn't handle for simplicity! Can you find them!
-
 If you're ready to go on, check out the little conclusion I wrote: [Step back.](step-back.md)
