@@ -1,47 +1,47 @@
-# eng240 final
+# ENG-240 Final
 
-final project for Professor Simpson's ENG-240 class, fall 2025.
+Final project for Professor Simpson's ENG-240 class, Fall 2025.
 
-# repo structure
+# Repo structure
 
-- my finished code is in `code` dir.
+- My finished code is in `code` dir.
 
-- the tutorial has its build configuration in `mkdocs.yml`, and its contents in `tutorial` dir.
+- The tutorial has its build configuration in `mkdocs.yml`, and its contents in `tutorial` dir.
 
 - `LICENSE` is the MIT license over this software and this tutorial
 
 - `requirements.txt` contains the dependencies for building the tutorial with python
 
-# running the code
+# Running the code
 
-to encode:
+To encode:
 
 ```bash
 python code/encode.py
 ```
 
-to decode:
+To decode:
 
 ```bash
 python code/decode.py
 ```
 
-# building the tutorial pages
+# Building the tutorial pages
 
-first install dependencies
+First, install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-then you can just go for it
+Then you can just go for it:
 
 ```bash
-mkdocs serve
+mkdocs serve  # run live, open in your browser
 ```
 
 or
 
 ```bash
-mkdocs build
+mkdocs build  # create files you can use wherever
 ```
