@@ -74,8 +74,6 @@ def decode_message():
 
     # Determine what number that code represents
     secret_message_length = int(header_code, 2)
-    print(header_code)
-    print(f'secret_message_length is {secret_message_length}')
 
     # For every line that has a secret letter, do these steps.
     decoded_message = ''
